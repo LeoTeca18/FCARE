@@ -24,7 +24,7 @@ nome_usuario = df.loc[df["id"] == id_usuario, "nome"].iloc[0]
 # Exibir tabela das transações do usuário selecionado
 st.subheader(f"📊 Transações Passadas de {nome_usuario}")
 historico_usuario = df[df["id"] == id_usuario].sort_values("hora", ascending=False)
-st.dataframe(historico_usuario, use_container_width=True)
+st.dataframe(historico_usuario, width='stretch')
 
 # Cálculo das métricas do usuário
 media_gastos_usuario = historico_usuario["valor_gasto_real"].mean()

@@ -19,7 +19,7 @@ id_selecionado = st.selectbox("Selecione o ID do usuário:", df_suspeitas["id"].
 if id_selecionado:
     transacoes_usuario = df_suspeitas[df_suspeitas["id"] == id_selecionado]
     st.write(f"**Transações suspeitas do usuário {transacoes_usuario.iloc[0]['nome']}:**")
-    st.dataframe(transacoes_usuario, use_container_width=True)
+    st.dataframe(transacoes_usuario, width='stretch')
 
     # Seleciona a transação pelo índice
     transacoes_indices = transacoes_usuario.index.tolist()

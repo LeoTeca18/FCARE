@@ -43,9 +43,9 @@ with col_g1:
                      x="estado", y="Quantidade",
                      labels={"estado": "Estado", "Quantidade": "Quantidade"},
                      color="estado")
-    st.plotly_chart(fig_bar, use_container_width=True)
+    st.plotly_chart(fig_bar, width='stretch')
 
 with col_g2:
     st.subheader("🥧 Distribuição (Pizza)")
     fig_pie = px.pie(df, names="estado", title="Proporção de Transações")
-    st.plotly_chart(fig_pie, use_container_width=True)
+    st.plotly_chart(fig_pie, width='stretch')

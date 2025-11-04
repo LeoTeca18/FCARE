@@ -16,7 +16,7 @@ if arquivo is not None:
     st.dataframe(df.head())
 
     # 🔹 Carregar modelo treinado
-    modelo = joblib.load("models\modelo_fraude_rf.pkl")
+    modelo = joblib.load("models/modelo_fraude_rf.pkl")
 
     # 🔹 Carregar scaler e encoders salvos
     scaler = joblib.load("models/scaler_valor_gasto.pkl")
