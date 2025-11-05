@@ -49,3 +49,31 @@ with col_g2:
     st.subheader("🥧 Distribuição (Pizza)")
     fig_pie = px.pie(df, names="estado", title="Proporção de Transações")
     st.plotly_chart(fig_pie, width='stretch')
+
+# 🔹 Gráfico dos tipos de fraude (apenas para transações marcadas como fraudulentas)
+st.markdown("---")
+st.subheader("🚨 Tipos de Fraude")
+if "tipo_fraude" in df.columns:
+    # Filtra apenas fraudes com tipo definido
+    tipos = df.loc[(df["classe"] == 1) & (df["tipo_fraude"].notna()), "tipo_fraude"]
+    if tipos.shape[0] > 0:
+        tipos_counts = tipos.value_counts().reset_index()
+        tipos_counts.columns = ["tipo_fraude", "Quantidade"]
+
+        col_f1, col_f2 = st.columns([2, 1])
+        with col_f1:
+            st.subheader("Contagem por Tipo de Fraude")
+            fig_tipos = px.bar(tipos_counts, x="tipo_fraude", y="Quantidade",
+                               labels={"tipo_fraude": "Tipo de Fraude", "Quantidade": "Quantidade"},
+                               color="tipo_fraude")
+            st.plotly_chart(fig_tipos, width='stretch')
+
+        with col_f2:
+            st.subheader("Proporção por Tipo")
+            fig_tipos_pie = px.pie(tipos_counts, names="tipo_fraude", values="Quantidade",
+                                   title="Proporção dos Tipos de Fraude")
+            st.plotly_chart(fig_tipos_pie, width='stretch')
+    else:
+        st.info("Não existem transações fraudulentas com 'tipo_fraude' definido no dataset.")
+else:
+    st.info("Coluna 'tipo_fraude' não encontrada no dataset. Carregue os dados pela página de upload para gerar essa coluna.")

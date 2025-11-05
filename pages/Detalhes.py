@@ -34,6 +34,7 @@ if id_selecionado:
     st.write("**Valor:**", f"{transacao['valor_gasto_real']:.2f}", "Kz")
     st.write("**Hora:**", transacao["hora"])
     st.write("**Localização:**", transacao["localizacao_desc"])
+    st.write("**Tipo de Fraude:**", transacao["tipo_fraude"])
     st.write("**Probabilidade:**", f"{transacao['probabilidade_fraude']}%")
 
     acao = st.radio(

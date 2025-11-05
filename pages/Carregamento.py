@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import numpy as np
 
 st.set_page_config(page_title="Tela de Upload", page_icon="📊", layout="wide")
 
@@ -51,6 +52,16 @@ if arquivo is not None:
         # 🔹 Adicionar colunas ao dataset original
         df["classe"] = predicoes  # 0 = não fraude, 1 = fraude
         df["probabilidade_fraude"] = probs.round(2)  # Percentual de 0 a 100
+        # 🔹 Adicionar coluna 'tipo de fraude' apenas para transações fraudulentas (aleatório)
+        fraude_tipos = ["Clonagem", "Phishing", "CNP", "Roubo de Identidade"]
+        # Seed opcional para reproducibilidade: 0 = usar aleatoriedade do sistema
+        seed = st.number_input("Seed para tipos de fraude (0 = aleatório)", min_value=0, value=42, step=1)
+        rng = np.random.default_rng(seed if seed != 0 else None)
+        df["tipo_fraude"] = pd.NA
+        mask_fraude = df["classe"] == 1
+        n_fraudes = int(mask_fraude.sum())
+        if n_fraudes > 0:
+            df.loc[mask_fraude, "tipo_fraude"] = rng.choice(fraude_tipos, size=n_fraudes)
                 
         # 🔹 Desnormalizar valor gasto
         if "valor_gasto" in df_features.columns:
